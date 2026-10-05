@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FastMart-Enterprise | SRS & Kiến Trúc Bán Lẻ Đa Kênh</title>
+
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Local GSAP Scripts with CDN fallback -->
+  <script src="libs/gsap.min.js"></script>
+  <script src="libs/ScrollTrigger.min.js"></script>
+  <script src="libs/TextPlugin.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="top-header">
+    <div class="brand-wrapper">
+      <div class="brand-logo">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>FastMart-Enterprise</h1>
+      </div>
+      <span class="brand-badge">IEEE 830 • v1.0 APPROVED</span>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="main-nav">
+      <button class="nav-tab active" data-view="view-slides">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+        </svg>
+        Slide GSAP
+      </button>
+      <button class="nav-tab" data-view="view-demo">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Giao Diện Demo
+      </button>
+      <button class="nav-tab" data-view="view-edge-cases">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        3 Bẫy Dữ Liệu
+      </button>
+      <button class="nav-tab" data-view="view-db-arch">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+        </svg>
+        Kiến Trúc & 3NF
+      </button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <button class="btn-action" id="btn-toggle-notes" title="Mở ghi chú thuyết trình">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+        </svg>
+        Notes
+      </button>
+      <button class="btn-action" id="btn-open-images-modal" title="Xem danh sách 7 ảnh sơ đồ trong folder images/">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        📁 Folder Ảnh Sơ Đồ (7)
+      </button>
+      <button class="btn-action" id="btn-reset-db" title="Khôi phục trạng thái ban đầu">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Reset DB
+      </button>
+      <button class="btn-action btn-primary" id="btn-fullscreen" title="Toàn màn hình trình chiếu">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        </svg>
+        Phóng to
+      </button>
+    </div>
+  </header>
+
+  <!-- ===============================================================
+       VIEW 1: GSAP PRESENTATION SLIDES (10 SLIDES)
+       =============================================================== -->
+  <main class="view-container active" id="view-slides">
+
+    <!-- Top Progress & Jump Selector -->
+    <div class="slide-progress-bar-container">
+      <div class="slide-progress-bar" id="slide-progress-bar"></div>
+    </div>
+
+    <div class="slide-controls-top">
+      <div class="slide-breadcrumbs">
+        <span style="color: var(--color-cyan);">FastMart-Enterprise</span>
+        <span style="color: var(--text-dim);">/</span>
+        <span id="breadcrumb-current-topic">Báo cáo Đồ án Mini Project SRS</span>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <select id="slide-jump-select" class="form-control"
+          style="padding: 0.35rem 0.75rem; font-size: 0.78rem; width: auto; background: rgba(15,23,42,0.85);">
+          <option value="0">1. Giới thiệu Dự án & Phạm vi SA</option>
+          <option value="1">2. Phân Tích Thực Trạng (AS-IS) & 3 Nút Thắt Khủng Hoảng</option>
+          <option value="2">3. Kiến trúc 3-Tier & Cơ chế Chống nghẽn (TO-BE)</option>
+          <option value="3">4. Stakeholders Matrix, User Stories & FR/NFR</option>
+          <option value="4">5. Activity Diagram: Luồng Đặt hàng & Swimlanes</option>
+          <option value="5">6. Use Case Diagram & Đặc tả Place Order</option>
+          <option value="6">7. Thiết kế Hướng đối tượng - Class Diagram 3 Ngăn</option>
+          <option value="7">8. Tương tác Thời gian thực - Sequence Diagram</option>
+          <option value="8">9. Thiết kế CSDL Quan hệ - ERD Chuẩn 3NF</option>
+          <option value="9">10. Xử lý 3 Bẫy Dữ liệu Dị biệt (Edge Cases)</option>
+          <option value="10">11. Đóng gói Hồ sơ SRS IEEE 830 & Nghiệm thu</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Slides Container -->
+    <div class="slides-wrapper">
+
+      <!-- SLIDE 1: GIỚI THIỆU & BỐI CẢNH -->
+      <section class="slide active" id="slide-intro">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN I: KHỞI TẠO DỰ ÁN & SYSTEM ANALYST SCOPE</span>
+          <h2 class="slide-title">Hệ Thống Quản Lý Chuỗi Bán Lẻ & Đặt Hàng Đa Kênh FastMart-Enterprise</h2>
+          <p class="slide-subtitle">Chuyển đổi số toàn diện cho chuỗi 50 siêu thị FMCG & Nền tảng E-Commerce (Session 19
+            SRS Capstone)</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <!-- Card 1 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-rose">⚠️</div>
+              <div class="card-header-text">
+                <h3>Khủng Hoảng Hệ Thống Cũ</h3>
+                <span>Legacy Monolithic (1-Tier) Pain Points</span>
+              </div>
+            </div>
+            <ul
+              style="list-style: none; font-size: 0.85rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.6rem;">
+              <li>💥 <strong>Sập giờ cao điểm:</strong> Flash Sale làm nghẽn kết nối CSDL, treo máy chủ, đứt gãy thanh
+                toán.</li>
+              <li>📦 <strong>Lệch tồn kho:</strong> Không đồng bộ thời gian thực giữa 50 siêu thị và online, dẫn đến
+                <em>Over-selling</em> (khách đặt nhưng kho hết hàng).</li>
+              <li>📑 <strong>Tài liệu rời rạc:</strong> Thiếu hồ sơ SRS chuẩn mực, gây tranh chấp phạm vi giữa Dev,
+                Tester và Khách hàng khi nghiệm thu.</li>
+            </ul>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🎯</div>
+              <div class="card-header-text">
+                <h3>Mục Tiêu System Analyst</h3>
+                <span>Vai trò & Chuẩn Quốc Tế</span>
+              </div>
+            </div>
+            <ul
+              style="list-style: none; font-size: 0.85rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.6rem;">
+              <li>🏛️ <strong>Kiến trúc 3-Tier:</strong> Tách biệt Presentation, Business Logic và Data Access Layer.
+              </li>
+              <li>📐 <strong>Mô hình hóa chuẩn UML:</strong> Activity Swimlanes, Use Case kèm Spec, Class Diagram 3
+                ngăn, Sequence Diagram.</li>
+              <li>📊 <strong>Chuẩn hóa CSDL 3NF:</strong> Đảm bảo toàn vẹn dữ liệu, triệt tiêu dư thừa và phụ thuộc bắc
+                cầu.</li>
+              <li>🛡️ <strong>Chống lỗi biên (Defensive):</strong> Xử lý triệt để 3 bẫy dữ liệu (Race Condition,
+                Timeout, Negative Input).</li>
+            </ul>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">🏆</div>
+              <div class="card-header-text">
+                <h3>Chuẩn Đóng Gói Hồ Sơ</h3>
+                <span>IEEE 830 / ISO 29148 Standard</span>
+              </div>
+            </div>
+            <div style="font-size: 0.82rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.5rem;">
+              <p>Hồ sơ đặc tả SRS đạt chuẩn quốc tế gồm đầy đủ:</p>
+              <div class="badge badge-emerald">Trang bìa 6 trường hành chính</div>
+              <div class="badge badge-cyan">Lịch sử thay đổi (Change Log v1.0 APPROVED)</div>
+              <div class="badge badge-indigo">Cấu trúc 4 phần nội dung chuẩn mực</div>
+              <div class="badge badge-amber">Bảng ký duyệt nghiệm thu 3 bên</div>
+              <p style="margin-top: 0.4rem; color: var(--text-dim); font-size: 0.75rem;">Phục vụ trực tiếp cho Đội Dev
+                Backend/Frontend lập trình và Đội Tester viết Test Case.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: PHÂN TÍCH THỰC TRẠNG (AS-IS) & 3 NÚT THẮT KHỦNG HOẢNG -->
+      <section class="slide" id="slide-asis">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN I: KHẢO SÁT &amp; ĐÁNH GIÁ THỰC TRẠNG (AS-IS ANALYSIS)</span>
+          <h2 class="slide-title">Thực Trạng Hệ Thống Cũ (AS-IS) &amp; 3 Nút Thắt Khủng Hoảng</h2>
+          <p class="slide-subtitle">Đánh giá toàn diện điểm nghẽn kiến trúc Monolithic (1-Tier), thiệt hại vận hành
+            chuỗi 50 siêu thị FMCG</p>
+        </div>
+
+        <div class="slide-grid-3" style="margin-bottom: 1.25rem;">
+          <!-- Pain Point 1 -->
+          <div class="slide-card" style="border-top: 3px solid #f43f5e;">
+            <div class="card-icon-header">
+              <div class="card-icon icon-rose">💥</div>
+              <div class="card-header-text">
+                <h3>1. Nghẽn Mạng &amp; Sập CSDL</h3>
+                <span>Hạ Tầng Monolithic Quá Tải Giờ Cao Điểm</span>
+              </div>
+            </div>
+            <ul
+              style="list-style: none; font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>• <strong>Kiến trúc Đơn khối (1-Tier):</strong> Toàn bộ giao diện Web, xử lý đơn và CSDL chạy chung
+                trên một cụm máy chủ vật lý cũ.</li>
+              <li>• <strong>Flash Sale tăng vọt:</strong> Lượng truy cập tăng đột biến từ 500 CCU lên 8,000+ CCU, ngốn
+                100% CPU/RAM.</li>
+              <li>• <strong>Tràn CSDL (Connection Exhaustion):</strong> Cạn kiệt connection pool, deadlock hàng loạt
+                khiến hệ thống sập và đứt gãy luồng thanh toán.</li>
+            </ul>
+          </div>
+
+          <!-- Pain Point 2 -->
+          <div class="slide-card" style="border-top: 3px solid #f59e0b;">
+            <div class="card-icon-header">
+              <div class="card-icon icon-amber">📦</div>
+              <div class="card-header-text">
+                <h3>2. Bất Đồng Bộ Tồn Kho</h3>
+                <span>Lệch Kho Giữa 50 Siêu Thị &amp; Online</span>
+              </div>
+            </div>
+            <ul
+              style="list-style: none; font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>• <strong>Đồng bộ Batching chậm:</strong> 50 siêu thị POS đồng bộ dữ liệu về trung tâm theo chu kỳ 2
+                tiếng/lần.</li>
+              <li>• <strong>Dữ liệu ảo (Stale Inventory):</strong> Website và App hiển thị còn hàng dù kho siêu thị thực
+                tế đã bán hết.</li>
+              <li>• <strong>Over-selling trầm trọng:</strong> Tỷ lệ hủy đơn do hết hàng lên đến <strong>18.5%</strong>
+                ngày khuyến mãi, bùng nổ khiếu nại khách hàng.</li>
+            </ul>
+          </div>
+
+          <!-- Pain Point 3 -->
+          <div class="slide-card" style="border-top: 3px solid #8b5cf6;">
+            <div class="card-icon-header">
+              <div class="card-icon icon-indigo">📑</div>
+              <div class="card-header-text">
+                <h3>3. Khủng Hoảng Tài Liệu</h3>
+                <span>Quy Trình Phát Triển Rời Rạc, Thiếu Chuẩn</span>
+              </div>
+            </div>
+            <ul
+              style="list-style: none; font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.45rem;">
+              <li>• <strong>Thiếu Hồ sơ SRS:</strong> Yêu cầu truyền miệng, tài liệu cũ chắp vá, không có quy chuẩn phân
+                loại FR/NFR.</li>
+              <li>• <strong>Lập trình phán đoán:</strong> Đội Dev không có sơ đồ Class/Sequence chuẩn, code vá víu tạo
+                ra nhiều lỗi bảo mật.</li>
+              <li>• <strong>Tranh chấp Nghiệm thu:</strong> Đội QA/Tester thiếu Acceptance Criteria, phạm vi dự án trượt
+                dốc (Scope Creep) kéo dài 6 tháng.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- AS-IS vs TO-BE Comparison Matrix -->
+        <div class="slide-card" style="padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+            <h3
+              style="font-size: 0.95rem; color: #38bdf8; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+              ⚖️ BẢNG ĐỐI CHIẾU MA TRẬN: THỰC TRẠNG CŨ (AS-IS) VS. GIẢI PHÁP MỤC TIÊU (TO-BE)
+            </h3>
+            <div style="display: flex; gap: 0.4rem;">
+              <button class="btn-action" id="btn-sim-asis-crash"
+                style="padding: 0.3rem 0.65rem; font-size: 0.75rem; border-color: rgba(244,63,94,0.4); color: #fb7185;">
+                💥 Thử Tải Hệ Thống Cũ (AS-IS Crash)
+              </button>
+              <button class="btn-action btn-primary" id="btn-sim-tobe-success"
+                style="padding: 0.3rem 0.65rem; font-size: 0.75rem;">
+                🛡️ Thử Tải Hệ Thống Mới (TO-BE 3-Tier)
+              </button>
+            </div>
+          </div>
+
+          <table class="slide-table">
+            <thead>
+              <tr>
+                <th style="width: 18%;">Hạng Mục Đánh Giá</th>
+                <th style="width: 41%; color: #fb7185;">THỰC TRẠNG CŨ (AS-IS: Monolithic 1-Tier)</th>
+                <th style="width: 41%; color: #34d399;">GIẢI PHÁP MỤC TIÊU (TO-BE: 3-Tier Enterprise)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Kiến trúc Hệ thống</strong></td>
+                <td><span class="badge badge-rose">1-Tier Monolithic</span> Ghép chung Presentation, Logic và DB trên 1
+                  máy chủ, tạo điểm nghẽn cổ chai đơn (Single Point of Failure).</td>
+                <td><span class="badge badge-emerald">3-Tier Phân Tầng</span> Tách biệt Presentation, Business Logic và
+                  Data Access. Mở rộng độc lập từng tầng không gián đoạn.</td>
+              </tr>
+              <tr>
+                <td><strong>Đồng bộ Tồn kho</strong></td>
+                <td>Đồng bộ thủ công / Batching định kỳ (chậm 2 tiếng). Xảy ra <strong>Over-selling 18.5%</strong> trong
+                  giờ Flash Sale.</td>
+                <td><strong>Khóa tồn kho Real-time 15 phút</strong>. Khóa lạc quan/bi quan + Redis Cache. <strong>0%
+                    Over-selling</strong>, đồng bộ 50 siêu thị.</td>
+              </tr>
+              <tr>
+                <td><strong>Khả năng Chịu tải</strong></td>
+                <td>Chỉ chịu được &lt; 1,000 CCU. Khi tăng tải, CPU 100%, tràn Connection Pool và sập hệ thống (Crash).
+                </td>
+                <td>Chịu tải <strong>10,000 CCU đồng thời</strong>. Latency &lt; 2.0s (P95). Redis Caching chặn 80% truy
+                  vấn đọc đến CSDL.</td>
+              </tr>
+              <tr>
+                <td><strong>Bảo mật CSDL</strong></td>
+                <td>Lộ kết nối CSDL trực tiếp ra internet; mật khẩu lưu text thường / mã hóa yếu, nguy cơ lộ toàn bộ dữ
+                  liệu.</td>
+                <td>Cách ly CSDL hoàn toàn trong <strong>Private Subnet/DMZ</strong>. Xác thực đa tầng, TLS 1.3, mật
+                  khẩu băm BCrypt có Salt.</td>
+              </tr>
+              <tr>
+                <td><strong>Sự cố Thanh toán</strong></td>
+                <td>Không có cơ chế xử lý callback timeout; khách mất tiền nhưng không có đơn, đối soát thủ công hàng
+                  tuần.</td>
+                <td><strong>Reconciliation Service tự động</strong> đối soát sau 5 phút, bảo toàn giao dịch và quyền lợi
+                  khách hàng 100%.</td>
+              </tr>
+              <tr>
+                <td><strong>Hồ sơ Kỹ thuật</strong></td>
+                <td>Rời rạc, thiếu quy chuẩn, Dev làm theo phán đoán, Tester không có căn cứ, tranh chấp nghiệm thu kéo
+                  dài.</td>
+                <td><strong>Hồ sơ SRS hoàn chỉnh IEEE 830 / ISO 29148 (v1.0 APPROVED)</strong> với đầy đủ 7 mô hình
+                  thiết kế và bảng ký duyệt 3 bên.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div id="asis-sim-output"
+            style="display: none; margin-top: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.75rem;">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: KIẾN TRÚC 3 TẦNG (TO-BE) -->
+      <section class="slide" id="slide-arch">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN I: KIẾN TRÚC KỸ THUẬT CỐT LÕI</span>
+          <h2 class="slide-title">Kiến Trúc Hệ Thống 3 Tầng (3-Tier Architecture)</h2>
+          <p class="slide-subtitle">Giải pháp phân tách trách nhiệm, tối ưu hiệu năng và bảo vệ cơ sở dữ liệu</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình Phân Tầng</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (FastMart_3Tier.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive slide-grid-2">
+          <!-- Stack Visualizer -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🏗️</div>
+              <div class="card-header-text">
+                <h3>Sơ Đồ Phân Tầng Hệ Thống</h3>
+                <span>Presentation → Business Logic → Data Access</span>
+              </div>
+            </div>
+
+            <div class="tier-stack">
+              <!-- Tier 1 -->
+              <div class="tier-item tier-pres">
+                <div class="tier-title-row">
+                  <div class="tier-name" style="color: #38bdf8;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    TẦNG 1: PRESENTATION LAYER (Giao diện)
+                  </div>
+                  <span class="badge badge-cyan">Client Side</span>
+                </div>
+                <div class="tier-tags">
+                  <span class="tier-tag">Web Customer (SPA)</span>
+                  <span class="tier-tag">FastMart Mobile App (Flutter/React Native)</span>
+                  <span class="tier-tag">POS Terminal Siêu thị</span>
+                  <span class="tier-tag">Warehouse Handheld App</span>
+                </div>
+              </div>
+
+              <div class="tier-connector">▼ RESTful API / GraphQL / HTTPS JSON ▼</div>
+
+              <!-- Tier 2 -->
+              <div class="tier-item tier-biz">
+                <div class="tier-title-row">
+                  <div class="tier-name" style="color: #34d399;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    TẦNG 2: BUSINESS LOGIC LAYER (Xử lý Nghiệp vụ)
+                  </div>
+                  <span class="badge badge-emerald">Core APIs & Rules</span>
+                </div>
+                <div class="tier-tags">
+                  <span class="tier-tag">Order Processing API</span>
+                  <span class="tier-tag">Real-time Stock Lock (15 Phút)</span>
+                  <span class="tier-tag">Promotion & Voucher Engine</span>
+                  <span class="tier-tag">VNPay/Momo Gateway Integrator</span>
+                  <span class="tier-tag">RBAC Security & Validation Filter</span>
+                </div>
+              </div>
+
+              <div class="tier-connector">▼ Connection Pool / TCP / TLS Socket ▼</div>
+
+              <!-- Tier 3 -->
+              <div class="tier-item tier-data">
+                <div class="tier-title-row">
+                  <div class="tier-name" style="color: #818cf8;">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
+                    </svg>
+                    TẦNG 3: DATA ACCESS LAYER (Lưu trữ Dữ liệu)
+                  </div>
+                  <span class="badge badge-indigo">Persistent Store</span>
+                </div>
+                <div class="tier-tags">
+                  <span class="tier-tag">MySQL Cluster (Master Write - Slave Read)</span>
+                  <span class="tier-tag">Redis Distributed Cache (Stock Lock & Session)</span>
+                  <span class="tier-tag">Database Connection Pool</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation of 3 reasons -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">🛡️</div>
+              <div class="card-header-text">
+                <h3>3 Lý Do Khắc Phục Triệt Để Khủng Hoảng</h3>
+                <span>So sánh với Monolithic 1-Tier</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.85rem; color: #cbd5e1;">
+              <div
+                style="background: rgba(15,23,42,0.6); padding: 0.85rem; border-radius: 8px; border-left: 3px solid #06b6d4;">
+                <strong style="color: #38bdf8;">1. Phân Tán Tải & Triệt Tiêu Nghẽn Mạng (High Scalability):</strong>
+                <p style="font-size: 0.8rem; margin-top: 0.25rem;">Các truy vấn xem sản phẩm và kiểm tra giá được phục
+                  vụ ngay từ <em>Redis Cache</em> và <em>Read Replicas</em>, giảm đến 80% tải trực tiếp lên Database
+                  chính trong giờ Flash Sale.</p>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.6); padding: 0.85rem; border-radius: 8px; border-left: 3px solid #10b981;">
+                <strong style="color: #34d399;">2. Cách Ly Bảo Mật CSDL Tuyệt Đối (Zero Direct DB Access):</strong>
+                <p style="font-size: 0.8rem; margin-top: 0.25rem;">Client (Web/App) hoàn toàn không có kết nối trực tiếp
+                  đến Database. CSDL nằm trong Private Subnet (VPC/DMZ), chỉ chấp nhận kết nối từ Business Layer đã được
+                  xác thực mã hóa.</p>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.6); padding: 0.85rem; border-radius: 8px; border-left: 3px solid #f59e0b;">
+                <strong style="color: #fbbf24;">3. Tính Toàn Vẹn Nghiệp Vụ & Dễ Bảo Trì (Loose Coupling):</strong>
+                <p style="font-size: 0.8rem; margin-top: 0.25rem;">Toàn bộ quy tắc khóa tồn kho 15 phút, áp mã voucher,
+                  và đối soát thanh toán được tập trung tại Tầng 2. Khi thay đổi cổng thanh toán hoặc giao diện, CSDL
+                  không hề bị xáo trộn.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/FastMart_3Tier.png" alt="Sơ Đồ Kiến Trúc 3 Tầng FastMart" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ Kiến Trúc 3 Tầng (FastMart_3Tier.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/FastMart_3Tier.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: STAKEHOLDERS & USER STORIES & REQUIREMENTS -->
+      <section class="slide" id="slide-reqs">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN I: THU THẬP & PHÂN TÍCH YÊU CẦU</span>
+          <h2 class="slide-title">Ma Trận Stakeholders, User Stories & Yêu Cầu FR/NFR</h2>
+          <p class="slide-subtitle">Chuyển đổi bài toán kinh doanh thành đặc tả kỹ thuật chuẩn mực</p>
+        </div>
+
+        <div class="slide-grid-2">
+          <!-- Stakeholders & User stories -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">👥</div>
+              <div class="card-header-text">
+                <h3>Ma Trận Nhu Cầu 4 Nhóm Stakeholders</h3>
+                <span>Inquiry & Traceability Matrix</span>
+              </div>
+            </div>
+
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Nhóm Stakeholder</th>
+                  <th>Mục tiêu Tra cứu SRS</th>
+                  <th>Trọng tâm Quan tâm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ban Giám Đốc</strong></td>
+                  <td>Đánh giá ROI & SLA cam kết</td>
+                  <td>Khả năng chịu tải, Doanh thu đa kênh</td>
+                </tr>
+                <tr>
+                  <td><strong>PM Dự Án</strong></td>
+                  <td>Quản lý tiến độ, Scope & Release</td>
+                  <td>WBS, Ranh giới Scope, Biên bản nghiệm thu</td>
+                </tr>
+                <tr>
+                  <td><strong>Dev (BE & FE)</strong></td>
+                  <td>Hiện thực hóa tính năng & CSDL</td>
+                  <td>Class, Sequence, ERD 3NF, API Specs</td>
+                </tr>
+                <tr>
+                  <td><strong>QA / Tester</strong></td>
+                  <td>Thiết kế Test Cases nghiệm thu</td>
+                  <td>Use Case Specs, Bẫy dữ liệu, NFR metrics</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top: 1rem;">
+              <h4 style="font-size: 0.85rem; color: #38bdf8; margin-bottom: 0.4rem;">3 User Stories Đại Diện (Chuẩn
+                Connextra):</h4>
+              <div style="font-size: 0.78rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.35rem;">
+                <div>🛒 <em>Khách hàng:</em> "As an <strong>Online Customer</strong>, I want to <strong>xem tồn kho thực
+                    tế và đặt hàng online</strong> so that <strong>tôi không bị hủy đơn do hết hàng</strong>."</div>
+                <div>💳 <em>Thu ngân:</em> "As a <strong>POS Cashier</strong>, I want to <strong>quét mã vạch và thanh
+                    toán VNPay/Momo tại quầy</strong> so that <strong>xử lý nhanh chóng không gây ùn tắc</strong>."
+                </div>
+                <div>🏭 <em>Thủ kho:</em> "As a <strong>Warehouse Staff</strong>, I want to <strong>nhận lệnh xuất kho
+                    tự động ngay khi đơn thanh toán</strong> so that <strong>đóng gói đúng hẹn</strong>."</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FR & NFR SMART -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">📋</div>
+              <div class="card-header-text">
+                <h3>Phân Loại FR & NFR Chuẩn SMART</h3>
+                <span>Functional vs. Non-Functional Requirements</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div>
+                <span class="badge badge-cyan" style="margin-bottom: 0.3rem;">YÊU CẦU CHỨC NĂNG (FR)</span>
+                <ul
+                  style="list-style: none; font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.3rem;">
+                  <li><strong>FR-ORD-001:</strong> Hỗ trợ giỏ hàng, đặt hàng đa kênh (Web, Mobile App, POS Siêu thị).
+                  </li>
+                  <li><strong>FR-INV-002:</strong> Tự động khóa tồn kho tạm thời 15 phút ngay khi bấm đặt hàng.</li>
+                  <li><strong>FR-PAY-003:</strong> Tích hợp thanh toán đa cổng VNPay/MoMo và đối soát tự động.</li>
+                  <li><strong>FR-WAR-004:</strong> Tiếp nhận lệnh đóng gói và đồng bộ trạng thái giao hàng.</li>
+                </ul>
+              </div>
+
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.6rem;">
+                <span class="badge badge-emerald" style="margin-bottom: 0.3rem;">YÊU CẦU PHI CHỨC NĂNG (NFR) - ĐẠT CHUẨN
+                  SMART</span>
+                <ul
+                  style="list-style: none; font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.35rem;">
+                  <li>⚡ <strong>SLA Uptime:</strong> Hệ thống duy trì độ sẵn sàng tối thiểu <strong>99.9%</strong> trong
+                    năm hoạt động (downtime < 8.76 giờ/năm).</li>
+                  <li>⏱️ <strong>Latency:</strong> Thời gian phản hồi API xử lý đơn hàng và trừ kho < <strong>2.0
+                      giây</strong> đối với 95% số lượng request (P95).</li>
+                  <li>🔒 <strong>Security:</strong> Toàn bộ dữ liệu truyền tải phải qua <strong>HTTPS TLS 1.3</strong>;
+                    mật khẩu người dùng băm bằng <strong>BCrypt / SHA-256</strong> có Salt.</li>
+                  <li>🚀 <strong>Scalability:</strong> Tầng Business & CSDL chịu tải đồng thời tối thiểu <strong>10,000
+                      CCU</strong> mà không làm suy giảm hiệu năng trong giờ Flash Sale.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: ACTIVITY DIAGRAM WITH SWIMLANES -->
+      <section class="slide" id="slide-swimlanes">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN II: MÔ HÌNH HÓA QUY TRÌNH NGHIỆP VỤ</span>
+          <h2 class="slide-title">Sơ Đồ Activity Diagram với 4 Làn Swimlanes</h2>
+          <p class="slide-subtitle">Quy trình Đặt hàng Đa kênh & Khóa tồn kho Tự động qua các làn trách nhiệm</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình Swimlanes 4 Làn</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (Activity_Order.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive uml-swimlane-container">
+          <!-- Lane 1: Khách hàng -->
+          <div class="uml-lane">
+            <div class="uml-lane-header" style="color: #38bdf8;">1. Khách Hàng (Client)</div>
+            <div class="uml-node start">● Bắt Đầu</div>
+            <div class="uml-node">Chọn SP & Thêm vào Giỏ</div>
+            <div class="uml-node">Bấm "Tiến hành Đặt hàng"</div>
+            <div class="uml-node" style="margin-top: 60px;">Chọn Cổng TT (VNPay/Momo)</div>
+            <div class="uml-node">Quét mã QR thanh toán</div>
+            <div class="uml-node end" style="margin-top: 50px;">Nhận Hóa đơn & Đơn hàng</div>
+          </div>
+
+          <!-- Lane 2: Business Layer -->
+          <div class="uml-lane">
+            <div class="uml-lane-header" style="color: #34d399;">2. Business Layer (API)</div>
+            <div class="uml-node" style="margin-top: 50px;">Validate Input (Phone, Qty)</div>
+            <div class="uml-node decision">Còn Tồn Kho Khả Dụng?</div>
+            <div class="uml-node">Tạo Lệnh Khóa Tồn (15p)</div>
+            <div class="uml-node" style="margin-top: 30px;">Tạo Giao dịch Cổng TT</div>
+            <div class="uml-node decision">Thanh Toán Hợp Lệ?</div>
+            <div class="uml-node">Trừ Kho & Tạo Đơn CONFIRMED</div>
+            <div class="uml-node">Bắn Event sang Hệ thống Kho</div>
+          </div>
+
+          <!-- Lane 3: Cổng Thanh toán -->
+          <div class="uml-lane">
+            <div class="uml-lane-header" style="color: #fbbf24;">3. Payment Gateway</div>
+            <div class="uml-node" style="margin-top: 155px;">Tạo Link QR Code VNPay</div>
+            <div class="uml-node">Xác thực OTP & Trừ tiền Ví</div>
+            <div class="uml-node">Gửi Webhook Callback (IPN)</div>
+            <div class="uml-node decision" style="margin-top: 15px;">Timeout Callback? -> Đối soát sau 5p</div>
+          </div>
+
+          <!-- Lane 4: Hệ thống Kho -->
+          <div class="uml-lane">
+            <div class="uml-lane-header" style="color: #818cf8;">4. Hệ Thống Kho (WMS)</div>
+            <div class="uml-node" style="margin-top: 250px;">Tiếp nhận Lệnh Đóng Gói</div>
+            <div class="uml-node">In Vận đơn & Đóng thùng hàng</div>
+            <div class="uml-node">Bàn giao Đơn vị Vận chuyển</div>
+            <div class="uml-node end">● Hoàn Tất Giao Hàng</div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/Activity_Order.png" alt="Sơ Đồ Activity Diagram 4 Làn Swimlanes" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ Activity Diagram 4 Làn (Activity_Order.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/Activity_Order.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: USE CASE DIAGRAM & SPECIFICATION -->
+      <section class="slide" id="slide-usecase">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN II: MÔ HÌNH HÓA CHỨC NĂNG HỆ THỐNG</span>
+          <h2 class="slide-title">Sơ Đồ Use Case Diagram & Đặc Tả Chi Tiết (Use Case Spec)</h2>
+          <p class="slide-subtitle">Quan hệ &lt;&lt;include&gt;&gt;, &lt;&lt;extend&gt;&gt; và quy trình xử lý cốt lõi</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình & Đặc Tả Use Case</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (UseCase_Diagram.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive slide-grid-2">
+          <!-- Use case overview -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🎯</div>
+              <div class="card-header-text">
+                <h3>Use Case Diagram Tổng Quan</h3>
+                <span>Actors & Relational Stereotypes</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.8rem; color: #cbd5e1;">
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #06b6d4;">
+                <strong style="color: #38bdf8;">Actors Chính:</strong>
+                <div>• <strong>Customer:</strong> Đăng ký, Đặt hàng Online, Quản lý Giỏ hàng, Theo dõi đơn.</div>
+                <div>• <strong>POS Cashier:</strong> Bán hàng tại quầy siêu thị, Quét mã vạch, In hóa đơn.</div>
+                <div>• <strong>Warehouse Staff:</strong> Tiếp nhận lệnh kho, Đóng gói, Bàn giao Shipper.</div>
+                <div>• <strong>System Admin:</strong> Phân quyền RBAC, Quản lý Danh mục, Xem Báo cáo.</div>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #10b981;">
+                <strong style="color: #34d399;">Quan hệ &lt;&lt;include&gt;&gt; (Bắt buộc phải thực hiện):</strong>
+                <div>• [Đặt hàng trực tuyến] ⇢ &lt;&lt;include&gt;&gt; ⇢ <strong>[Xác thực Người dùng]</strong></div>
+                <div>• [Đặt hàng trực tuyến] ⇢ &lt;&lt;include&gt;&gt; ⇢ <strong>[Kiểm tra & Khóa Tồn kho]</strong>
+                </div>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                <strong style="color: #fbbf24;">Quan hệ &lt;&lt;extend&gt;&gt; (Mở rộng theo điều kiện):</strong>
+                <div>• [Đặt hàng trực tuyến] ⇠ &lt;&lt;extend&gt;&gt; ⇠ <strong>[Áp mã Voucher Giảm giá]</strong></div>
+                <div>• [Đặt hàng trực tuyến] ⇠ &lt;&lt;extend&gt;&gt; ⇠ <strong>[Thanh toán VNPay / MoMo]</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Use case spec table -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">📝</div>
+              <div class="card-header-text">
+                <h3>Đặc Tả Chi Tiết: UC-ORD-01 "Đặt Hàng Trực Tuyến"</h3>
+                <span>Use Case Specification Sheet</span>
+              </div>
+            </div>
+
+            <div style="font-size: 0.78rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.45rem;">
+              <div><strong>Primary Actor:</strong> Khách hàng trực tuyến (Online Customer)</div>
+              <div><strong>Pre-conditions:</strong> Khách đã đăng nhập; Giỏ hàng có ít nhất 01 sản phẩm hợp lệ.</div>
+              <div><strong>Post-conditions:</strong> Đơn hàng tạo ở trạng thái CONFIRMED; Tồn kho bị trừ thực tế; Hóa
+                đơn lưu trữ; Email xác nhận được gửi.</div>
+
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.4rem;">
+                <strong style="color: #38bdf8;">Luồng Chính (Main Flow):</strong>
+                <ol style="padding-left: 1.2rem; margin-top: 0.2rem; line-height: 1.4;">
+                  <li>Khách hàng truy cập trang Checkout và xác nhận danh sách sản phẩm.</li>
+                  <li>Hệ thống gọi Use Case &lt;&lt;include&gt;&gt; Kiểm tra & Khóa tồn kho (15 phút).</li>
+                  <li>Khách hàng nhập thông tin giao hàng (SĐT, Địa chỉ) và chọn cổng VNPay.</li>
+                  <li>Khách thực hiện quét mã QR và xác nhận thanh toán.</li>
+                  <li>Cổng VNPay gửi webhook thông báo giao dịch thành công.</li>
+                  <li>Hệ thống cập nhật đơn CONFIRMED, trừ kho chính thức và gửi thông báo kho.</li>
+                </ol>
+              </div>
+
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 0.4rem;">
+                <strong style="color: #fb7185;">Luồng Ngoại Lệ (Exception Flows):</strong>
+                <div>• <em>EF1 - Hết hàng:</em> Báo lỗi, giải phóng lock, yêu cầu chọn lại.</div>
+                <div>• <em>EF2 - VNPay Timeout:</em> Đưa đơn vào hàng đợi đối soát tự động sau 5 phút.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/UseCase_Diagram.png" alt="Sơ Đồ Use Case Diagram FastMart" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ Use Case Diagram (UseCase_Diagram.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/UseCase_Diagram.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: CLASS DIAGRAM 3 COMPARTMENTS -->
+      <section class="slide" id="slide-class">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN III: THIẾT KẾ CẤU TRÚC HƯỚNG ĐỐI TƯỢNG</span>
+          <h2 class="slide-title">Sơ Đồ Class Diagram Chi Tiết (3 Ngăn & OOP)</h2>
+          <p class="slide-subtitle">Quan hệ Kế thừa, Hợp thành (Composition), Kết tập (Aggregation) và Bội số</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình Class 3 Ngăn</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (Class_Diagram.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive slide-grid-3">
+          <!-- Class User & Customer -->
+          <div class="uml-class-box">
+            <div class="class-box-header">&lt;&lt;abstract&gt;&gt; User</div>
+            <div class="class-box-section">
+              <div># userId: String</div>
+              <div># username: String</div>
+              <div># passwordHash: String</div>
+              <div># fullName: String</div>
+              <div># phone: String</div>
+              <div># email: String</div>
+              <div># role: UserRole</div>
+            </div>
+            <div class="class-box-section">
+              <div>+ login(pwd): Boolean</div>
+              <div>+ updateProfile(): Void</div>
+              <div>+ getPermissions(): List&lt;String&gt;</div>
+            </div>
+            <!-- Subclass Customer -->
+            <div
+              style="background: rgba(6, 182, 212, 0.1); border-top: 2px dashed rgba(6, 182, 212, 0.4); padding: 0.4rem 0.6rem;">
+              <div style="color: #38bdf8; font-weight: 700; text-align: center;">▲ Kế thừa: Customer</div>
+              <div>- loyaltyPoints: Integer</div>
+              <div>+ placeOrder(): Order</div>
+              <div>+ applyVoucher(code): Boolean</div>
+            </div>
+          </div>
+
+          <!-- Class Order & OrderItem -->
+          <div class="uml-class-box">
+            <div class="class-box-header">Order (Hợp thành OrderItem)</div>
+            <div class="class-box-section">
+              <div>- orderId: String [PK]</div>
+              <div>- customerId: String [FK]</div>
+              <div>- orderDate: DateTime</div>
+              <div>- totalAmount: Double</div>
+              <div>- channel: OrderChannel</div>
+              <div>- status: OrderStatus</div>
+            </div>
+            <div class="class-box-section">
+              <div>+ calculateTotal(): Double</div>
+              <div>+ confirmPayment(): Void</div>
+              <div>+ cancelOrder(): Void</div>
+            </div>
+            <!-- Composition OrderItem -->
+            <div
+              style="background: rgba(16, 185, 129, 0.1); border-top: 2px solid rgba(16, 185, 129, 0.4); padding: 0.4rem 0.6rem;">
+              <div style="color: #34d399; font-weight: 700; text-align: center;">◆ Composition (1..*): OrderItem</div>
+              <div>- orderId: String [FK]</div>
+              <div>- productId: String [FK]</div>
+              <div>- quantity: Integer (&gt;0)</div>
+              <div>- price: Double</div>
+              <div>- lineTotal: Double</div>
+              <div>+ getSubtotal(): Double</div>
+            </div>
+          </div>
+
+          <!-- Class Product, Category & Payment -->
+          <div class="uml-class-box">
+            <div class="class-box-header">Product &amp; Payment</div>
+            <div class="class-box-section">
+              <div style="color: #38bdf8; font-weight: 700;">Product (◇ Aggregation Category)</div>
+              <div>- productId: String [PK]</div>
+              <div>- productName: String</div>
+              <div>- categoryId: String [FK]</div>
+              <div>- unitPrice: Double</div>
+              <div>- stockQuantity: Integer</div>
+              <div>+ checkAvailability(qty): Boolean</div>
+              <div>+ lockStock(qty, 15m): Boolean</div>
+              <div>+ deductStock(qty): Void</div>
+            </div>
+            <div class="class-box-section" style="background: rgba(245, 158, 11, 0.08);">
+              <div style="color: #fbbf24; font-weight: 700;">Payment (Quan hệ 1-1 với Order)</div>
+              <div>- paymentId: String [PK]</div>
+              <div>- orderId: String [FK]</div>
+              <div>- method: PaymentMethod</div>
+              <div>- amount: Double</div>
+              <div>- paymentStatus: Status</div>
+              <div>- transactionNo: String</div>
+              <div>+ processPayment(): Boolean</div>
+              <div>+ verifyCallback(ipn): Boolean</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/Class_Diagram.png" alt="Sơ Đồ Class Diagram FastMart" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ Class Diagram (Class_Diagram.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/Class_Diagram.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: SEQUENCE DIAGRAM -->
+      <section class="slide" id="slide-seq">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN III: TƯƠNG TÁC THỜI GIAN THỰC</span>
+          <h2 class="slide-title">Sơ Đồ Sequence Diagram: Xác Nhận Đặt Hàng & Trừ Kho</h2>
+          <p class="slide-subtitle">Lifelines, Activation Bars, và Cấu trúc điều khiển alt, loop trong môi trường thời gian thực</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình Sequence Tương Tác</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (Sequence_Order.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive slide-card" style="padding: 1.25rem;">
+          <div
+            style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; text-align: center; border-bottom: 2px solid rgba(6, 182, 212, 0.4); padding-bottom: 0.5rem; margin-bottom: 0.75rem;">
+            <div class="badge badge-cyan" style="padding: 0.4rem;">:CustomerUI</div>
+            <div class="badge badge-emerald" style="padding: 0.4rem;">:OrderController</div>
+            <div class="badge badge-amber" style="padding: 0.4rem;">:InventoryService</div>
+            <div class="badge badge-indigo" style="padding: 0.4rem;">:PaymentService</div>
+            <div class="badge badge-rose" style="padding: 0.4rem;">:Database Cluster</div>
+          </div>
+
+          <!-- Sequence Steps Animated -->
+          <div
+            style="display: flex; flex-direction: column; gap: 0.45rem; font-family: var(--font-mono); font-size: 0.74rem;">
+            <div class="seq-message-row"
+              style="background: rgba(15,23,42,0.7); padding: 0.4rem 0.75rem; border-radius: 4px; border-left: 3px solid #06b6d4;">
+              <strong>1. CustomerUI ➔ OrderController:</strong> submitOrder(items, paymentMethod)
+            </div>
+
+            <div class="seq-message-row"
+              style="background: rgba(16, 185, 129, 0.1); padding: 0.4rem 0.75rem; border-radius: 4px; border-left: 3px solid #10b981;">
+              <strong>[loop: Mỗi sản phẩm trong giỏ hàng]</strong>
+              <div style="padding-left: 1rem; color: #a5f3fc;">
+                ➔ OrderController ➔ InventoryService: checkAndHoldStock(productId, qty, duration=15min)<br>
+                ➔ InventoryService ➔ Database: SELECT stockQuantity FROM Products FOR UPDATE (Pessimistic Lock)
+              </div>
+            </div>
+
+            <div class="seq-message-row"
+              style="background: rgba(245, 158, 11, 0.1); padding: 0.4rem 0.75rem; border-radius: 4px; border-left: 3px solid #f59e0b;">
+              <strong>[alt 1: Còn hàng khả dụng]</strong>
+              <div style="padding-left: 1rem; color: #fef08a;">
+                Database ➔ InventoryService: StockAvailable=TRUE ➔ OrderController: stockHeldToken<br>
+                OrderController ➔ PaymentService: createPaymentTransaction(orderId, amount, method)
+              </div>
+            </div>
+
+            <div class="seq-message-row"
+              style="background: rgba(244, 63, 94, 0.1); padding: 0.4rem 0.75rem; border-radius: 4px; border-left: 3px solid #fb7185;">
+              <strong>[alt 2: Hết hàng hoặc thanh toán thất bại]</strong>
+              <div style="padding-left: 1rem; color: #fca5a5;">
+                InventoryService ➔ OrderController: StockUnavailableException ➔ Rollback Stock Lock<br>
+                OrderController ➔ CustomerUI: Trả mã lỗi 409 Conflict: "Sản phẩm vừa hết hàng!"
+              </div>
+            </div>
+
+            <div class="seq-message-row"
+              style="background: rgba(99, 102, 241, 0.1); padding: 0.4rem 0.75rem; border-radius: 4px; border-left: 3px solid #818cf8;">
+              <strong>2. PaymentService ➔ OrderController:</strong> onPaymentCallbackSuccess(transactionNo)<br>
+              <strong>3. OrderController ➔ Database:</strong> COMMIT TRANSACTION: deductStock() & INSERT INTO Orders & Payments<br>
+              <strong>4. OrderController ➔ CustomerUI:</strong> 201 Created: Trả về Order Confirmation & Hóa đơn
+            </div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/Sequence_Order.png" alt="Sơ Đồ Sequence Diagram FastMart" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ Sequence Diagram (Sequence_Order.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/Sequence_Order.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: ERD 3NF -->
+      <section class="slide" id="slide-erd">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN III: THIẾT KẾ CƠ SỞ DỮ LIỆU</span>
+          <h2 class="slide-title">Sơ Đồ CSDL ERD Đạt Chuẩn 3NF (1NF ➔ 2NF ➔ 3NF)</h2>
+          <p class="slide-subtitle">Triệt tiêu mảng lặp (1NF), phụ thuộc hàm một phần (2NF) và phụ thuộc bắc cầu (3NF)</p>
+          <div class="diagram-mode-switcher">
+            <button class="diagram-mode-btn active" data-mode="interactive">💻 Mô Hình Chuẩn Hóa 3NF</button>
+            <button class="diagram-mode-btn" data-mode="image">🖼️ Ảnh Sơ Đồ (ERD_3NF.png)</button>
+          </div>
+        </div>
+
+        <div class="diagram-panel-interactive slide-grid-2">
+          <!-- Normalization Process -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🧩</div>
+              <div class="card-header-text">
+                <h3>Quá Trình Chuẩn Hóa 3NF</h3>
+                <span>Các bước chuẩn hóa từ Báo cáo Đơn hàng</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.7rem; font-size: 0.8rem; color: #cbd5e1;">
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #06b6d4;">
+                <strong style="color: #38bdf8;">1NF (First Normal Form):</strong>
+                <div>Loại bỏ mảng lặp các sản phẩm trong cùng một đơn hàng. Tách bảng chi tiết <code>OrderItem</code>,
+                  mỗi dòng chứa giá trị nguyên tố (Atomic values) duy nhất.</div>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #10b981;">
+                <strong style="color: #34d399;">2NF (Second Normal Form):</strong>
+                <div>Loại bỏ phụ thuộc hàm một phần vào Khóa chính kết hợp. Trong
+                  <code>OrderItem(orderId, productId)</code>, các thuộc tính <code>quantity</code>, <code>price</code>
+                  phụ thuộc toàn phần vào cả cặp khóa. Tách <code>Product</code> thành thực thể độc lập.</div>
+              </div>
+
+              <div
+                style="background: rgba(15,23,42,0.7); padding: 0.75rem; border-radius: 6px; border-left: 3px solid #f59e0b;">
+                <strong style="color: #fbbf24;">3NF (Third Normal Form):</strong>
+                <div>Loại bỏ phụ thuộc bắc cầu (Transitive Dependency). Không lưu trực tiếp tên danh mục sản phẩm vào
+                  bảng Product mà tách ra bảng <code>Category</code> (Product.categoryId ➔ Category). Tương tự, tách
+                  bảng <code>Users</code> ra khỏi Orders.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ERD Schema Overview -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">🗄️</div>
+              <div class="card-header-text">
+                <h3>Các Thực Thể & Khóa Ngoại (3NF)</h3>
+                <span>Primary Key [PK] & Foreign Key [FK]</span>
+              </div>
+            </div>
+
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.6; color: #cbd5e1;">
+              <div style="margin-bottom: 0.4rem;">
+                <span style="color: #38bdf8; font-weight: 700;">Users</span> (<u>userId</u> [PK], username, password,
+                fullName, phone, email, role)
+              </div>
+              <div style="margin-bottom: 0.4rem;">
+                <span style="color: #38bdf8; font-weight: 700;">Categories</span> (<u>categoryId</u> [PK], categoryName,
+                description)
+              </div>
+              <div style="margin-bottom: 0.4rem;">
+                <span style="color: #38bdf8; font-weight: 700;">Products</span> (<u>productId</u> [PK], productName,
+                <em>categoryId</em> [FK], unitPrice, stockQuantity, status)
+              </div>
+              <div style="margin-bottom: 0.4rem;">
+                <span style="color: #34d399; font-weight: 700;">Orders</span> (<u>orderId</u> [PK], <em>customerId</em>
+                [FK], orderDate, totalAmount, channel, status)
+              </div>
+              <div
+                style="margin-bottom: 0.4rem; background: rgba(6, 182, 212, 0.1); padding: 0.25rem 0.5rem; border-radius: 4px;">
+                <span style="color: #38bdf8; font-weight: 700;">OrderItem</span> (<u><em>orderId</em></u> [PK, FK],
+                <u><em>productId</em></u> [PK, FK], quantity, price, lineTotal)
+              </div>
+              <div>
+                <span style="color: #fbbf24; font-weight: 700;">Payments</span> (<u>paymentId</u> [PK], <em>orderId</em>
+                [FK], method, amount, paymentStatus, transactionNo)
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image View from folder images/ -->
+        <div class="diagram-panel-image">
+          <div class="diagram-img-card">
+            <img src="images/ERD_3NF.png" alt="Sơ Đồ CSDL ERD 3NF FastMart" class="diagram-thumbnail-img" data-diagram-title="Sơ Đồ CSDL ERD 3NF (ERD_3NF.png)">
+            <div class="diagram-img-footer">
+              <span class="diagram-img-path">📁 File nguồn: <code>images/ERD_3NF.png</code></span>
+              <span>🔍 Click ảnh để phóng to toàn màn hình • Bạn có thể tự thay ảnh bằng cách copy đè vào thư mục <code>images/</code></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: 3 BẪY DỮ LIỆU DỊ BIỆT (EDGE CASES) -->
+      <section class="slide" id="slide-edges">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN IV: THIẾT KẾ PHÒNG THỦ & XỬ LÝ NGOẠI LỆ</span>
+          <h2 class="slide-title">Xử Lý 3 Bẫy Dữ Liệu Dị Biệt (Edge Cases & Defensive Design)</h2>
+          <p class="slide-subtitle">Giải pháp kỹ thuật triệt để bảo vệ toàn vẹn dữ liệu trong giờ cao điểm</p>
+        </div>
+
+        <div class="slide-grid-3">
+          <!-- Edge Case 1 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-rose">⚡</div>
+              <div class="card-header-text">
+                <h3>Bẫy 1: Race Condition</h3>
+                <span>Tranh Chấp Tồn Kho Cùng Millisecond</span>
+              </div>
+            </div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.5rem;">
+              <p><strong>Hiện tượng:</strong> 2+ khách cùng bấm mua 1 sản phẩm cuối cùng tại cùng 1 thời điểm
+                millisecond trong giờ Flash Sale.</p>
+              <div style="background: rgba(15,23,42,0.7); padding: 0.6rem; border-radius: 6px;">
+                <strong style="color: #34d399;">Giải pháp Phân tích:</strong>
+                <div>• Áp dụng <em>Pessimistic Row Locking</em> tại CSDL (<code>SELECT ... FOR UPDATE</code>).</div>
+                <div>• Tầng 2 sử dụng <em>Redis Atomic Decrement</em> (<code>DECRBY stock_key</code>). Chỉ khách đầu
+                  tiên thành công, các khách sau nhận thông báo hết hàng thân thiện. Không xảy ra
+                  <strong>Over-selling</strong>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edge Case 2 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-amber">⏳</div>
+              <div class="card-header-text">
+                <h3>Bẫy 2: Callback Timeout</h3>
+                <span>Gián Đoạn Mạng Cổng Thanh Toán</span>
+              </div>
+            </div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.5rem;">
+              <p><strong>Hiện tượng:</strong> Khách đã bị trừ tiền trên ví VNPay nhưng mạng 4G bị đứt, Webhook Callback
+                không gửi về FastMart được.</p>
+              <div style="background: rgba(15,23,42,0.7); padding: 0.6rem; border-radius: 6px;">
+                <strong style="color: #fbbf24;">Giải pháp Phân tích:</strong>
+                <div>• Đơn hàng giữ ở trạng thái <code>PENDING_RECONCILIATION</code>.</div>
+                <div>• Tiến trình nền <em>Reconciliation Worker</em> định kỳ kích hoạt sau <strong>5 phút</strong>, chủ
+                  động gọi Query API sang VNPay để đối soát và tự động chuyển đơn sang <code>CONFIRMED</code>.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edge Case 3 -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🛡️</div>
+              <div class="card-header-text">
+                <h3>Bẫy 3: Invalid Input</h3>
+                <span>Dữ Liệu Giao Dịch Dị Biệt & Phá Hoại</span>
+              </div>
+            </div>
+            <div style="font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.5rem;">
+              <p><strong>Hiện tượng:</strong> Khách hàng hoặc hacker can thiệp gửi số lượng âm
+                (<code>quantity = -5</code>) hoặc mã voucher hết hạn.</p>
+              <div style="background: rgba(15,23,42,0.7); padding: 0.6rem; border-radius: 6px;">
+                <strong style="color: #38bdf8;">Giải pháp Phân tích:</strong>
+                <div>• Bộ lọc <em>Defensive Validation</em> tại Tầng 2 chặn lập tức trước khi truy cập CSDL.</div>
+                <div>• Trả mã lỗi <code>HTTP 400 Bad Request</code> kèm thông báo rõ ràng, đồng thời ghi
+                  <code>AuditLog</code> để giám sát an ninh.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: RBAC MATRIX & SRS SIGN-OFF -->
+      <section class="slide" id="slide-srs-package">
+        <div class="slide-header">
+          <span class="slide-badge-title">PHẦN IV: ĐÓNG GÓI HỒ SƠ & NGHIỆM THU</span>
+          <h2 class="slide-title">Đóng Gói Hồ Sơ SRS IEEE 830 / ISO 29148 & Nghiệm Thu</h2>
+          <p class="slide-subtitle">Hoàn tất tài liệu đặc tả chuẩn quốc tế v1.0 APPROVED và bàn giao phát triển</p>
+        </div>
+
+        <div class="slide-grid-2">
+          <!-- RBAC Matrix -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-cyan">🔐</div>
+              <div class="card-header-text">
+                <h3>Ma Trận Phân Quyền 3 Tầng (RBAC Matrix)</h3>
+                <span>Role-Based Access Control</span>
+              </div>
+            </div>
+
+            <table class="slide-table">
+              <thead>
+                <tr>
+                  <th>Chức Năng Nghiệp Vụ</th>
+                  <th>Customer</th>
+                  <th>Cashier</th>
+                  <th>Warehouse</th>
+                  <th>Admin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Xem & Tìm kiếm Sản phẩm</td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                  <td><span class="badge badge-cyan">Toàn quyền</span></td>
+                </tr>
+                <tr>
+                  <td>Đặt hàng Trực tuyến</td>
+                  <td><span class="badge badge-cyan">Tạo / Xem</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                </tr>
+                <tr>
+                  <td>Bán hàng & In bill POS</td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-cyan">Toàn quyền</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                </tr>
+                <tr>
+                  <td>Tiếp nhận & Xuất kho</td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-cyan">Toàn quyền</span></td>
+                  <td><span class="badge badge-emerald">Xem</span></td>
+                </tr>
+                <tr>
+                  <td>Quản trị Danh mục & Phân quyền</td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-rose">Không</span></td>
+                  <td><span class="badge badge-cyan">Toàn quyền</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sign-off Sheet -->
+          <div class="slide-card">
+            <div class="card-icon-header">
+              <div class="card-icon icon-emerald">✍️</div>
+              <div class="card-header-text">
+                <h3>Biên Bản Ký Duyệt Nghiệm Thu 3 Bên</h3>
+                <span>Sign-off & Approval Sheet (v1.0 APPROVED)</span>
+              </div>
+            </div>
+
+            <div style="font-size: 0.8rem; color: #cbd5e1; display: flex; flex-direction: column; gap: 0.75rem;">
+              <p>Hồ sơ đặc tả SRS đã đáp ứng 100% tiêu chí Rubric đánh giá, giải quyết triệt để 3 bẫy dữ liệu và sẵn
+                sàng bàn giao cho đội ngũ Phát triển & Kiểm thử:</p>
+
+              <div
+                style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; text-align: center; margin-top: 0.5rem;">
+                <div
+                  style="background: rgba(15,23,42,0.8); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">ĐẠI DIỆN KHÁCH HÀNG</div>
+                  <strong style="color: #38bdf8; display: block; margin: 0.4rem 0;">Giám Đốc FastMart</strong>
+                  <span class="badge badge-emerald">ĐÃ DUYỆT (SIGNED)</span>
+                </div>
+
+                <div
+                  style="background: rgba(15,23,42,0.8); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">QUẢN LÝ DỰ ÁN</div>
+                  <strong style="color: #38bdf8; display: block; margin: 0.4rem 0;">Project Manager (PM)</strong>
+                  <span class="badge badge-emerald">ĐÃ DUYỆT (SIGNED)</span>
+                </div>
+
+                <div
+                  style="background: rgba(15,23,42,0.8); padding: 0.75rem; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                  <div style="font-size: 0.72rem; color: var(--text-dim);">TRƯỞNG NHÓM PHÂN TÍCH</div>
+                  <strong style="color: #38bdf8; display: block; margin: 0.4rem 0;">System Analyst Lead</strong>
+                  <span class="badge badge-emerald">ĐÃ DUYỆT (SIGNED)</span>
+                </div>
+              </div>
+
+              <div style="text-align: center; margin-top: 0.75rem;">
+                <button class="btn-action btn-primary"
+                  onclick="document.querySelector('[data-view=\'view-demo\']').click()" style="margin: 0 auto;">
+                  👉 Chuyển Sang Trải Nghiệm Giao Diện Demo FastMart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Slide Bottom Controls -->
+    <div class="slide-controls-bottom">
+      <div class="slide-nav-btns">
+        <button class="slide-btn" id="btn-prev-slide" title="Slide trước (← hoặc Phím Cách)">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <span class="slide-counter" id="slide-counter-display">1 / 10</span>
+        <button class="slide-btn" id="btn-next-slide" title="Slide tiếp theo (→ hoặc Phím Cách)">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      <div style="font-size: 0.78rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem;">
+        <span>Phím tắt: <strong>[← / →]</strong> Chuyển Slide • <strong>[Space]</strong> Tiếp • <strong>[Notes]</strong>
+          Ghi chú</span>
+      </div>
+    </div>
+
+    <!-- Presenter Notes Modal -->
+    <div class="notes-modal" id="presenter-notes-modal">
+      <div class="notes-header">
+        <h4 style="font-size: 0.9rem; color: #38bdf8; display: flex; align-items: center; gap: 0.4rem;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Ghi Chú Thuyết Trình (Presenter Notes)
+        </h4>
+        <button id="btn-close-notes"
+          style="background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 1.2rem;">&times;</button>
+      </div>
+      <div class="notes-content" id="presenter-notes-body">
+        Đang tải ghi chú...
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- ===============================================================
+       VIEW 2: GIAO DIỆN DEMO FASTMART (STOREFRONT & POS CHECKOUT)
+       =============================================================== -->
+  <section class="view-container" id="view-demo">
+
+    <!-- Demo Header Bar -->
+    <div class="demo-header-bar">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 800; color: #f8fafc;">FastMart Storefront & POS Checkout Page</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Mô phỏng Giao diện Người dùng (UI Wireframe ➔ Live
+          Functional UI) & Khóa Tồn Kho 15 Phút</p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <span style="font-size: 0.8rem; color: var(--text-dim);">Kênh bán hàng:</span>
+        <div class="channel-selector">
+          <button class="channel-btn active" data-channel="ONLINE_WEB">🌐 Website</button>
+          <button class="channel-btn" data-channel="ONLINE_APP">📱 Mobile App</button>
+          <button class="channel-btn" data-channel="POS_COUNTER">🏪 Quầy POS Siêu Thị</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Store Layout -->
+    <div class="store-grid">
+      <!-- Catalog Section -->
+      <div class="catalog-section">
+        <!-- Categories Filter -->
+        <div class="category-pills">
+          <button class="category-pill active" data-cat="ALL">Tất Cả Sản Phẩm</button>
+          <button class="category-pill" data-cat="CAT-01">🥩 Thực phẩm & Tươi sống</button>
+          <button class="category-pill" data-cat="CAT-02">🥛 Sữa & Bơ dinh dưỡng</button>
+          <button class="category-pill" data-cat="CAT-03">🧼 Hóa mỹ phẩm</button>
+          <button class="category-pill" data-cat="CAT-04">🍵 Đồ uống & Giải khát</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="products-grid-container">
+          <!-- Rendered by demo.js -->
+        </div>
+      </div>
+
+      <!-- Cart & Checkout Panel -->
+      <div class="cart-panel">
+        <div class="cart-header">
+          <h3
+            style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; display: flex; align-items: center; gap: 0.4rem;">
+            🛒 Giỏ Hàng (<span id="cart-badge-count">0</span>)
+          </h3>
+          <span class="badge badge-cyan" id="demo-channel-label">Website</span>
+        </div>
+
+        <!-- 15-Minute Real-time Stock Lock Banner -->
+        <div class="lock-timer-box" id="cart-lock-banner" style="display: none;">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div>
+            <strong>Đang Khóa Giữ Chỗ Tồn Kho: </strong>
+            <span id="lock-timer-countdown"
+              style="font-family: var(--font-mono); font-weight: 800; color: #fbbf24;">15:00</span>
+          </div>
+        </div>
+
+        <!-- Items List -->
+        <div class="cart-items-list" id="cart-items-container">
+          <!-- Rendered by demo.js -->
+        </div>
+
+        <!-- Voucher Input -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 0.75rem;">
+          <input type="text" id="input-voucher-code" class="form-control" placeholder="Mã giảm giá (VD: FASTMART50)"
+            style="text-transform: uppercase;">
+          <button class="btn-action" id="btn-apply-voucher" style="flex-shrink: 0;">Áp dụng</button>
+        </div>
+
+        <!-- Summary -->
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Tạm tính:</span>
+            <span id="cart-subtotal">0 đ</span>
+          </div>
+          <div class="summary-row" style="color: #34d399;">
+            <span>Giảm giá Voucher:</span>
+            <span id="cart-discount">-0 đ</span>
+          </div>
+          <div class="summary-row total">
+            <span>TỔNG CỘNG:</span>
+            <span id="cart-total">0 đ</span>
+          </div>
+
+          <button class="btn-action btn-primary" id="btn-open-checkout"
+            style="width: 100%; justify-content: center; padding: 0.75rem; margin-top: 0.5rem; font-size: 0.95rem;"
+            disabled>
+            Tiến Hành Thanh Toán
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ===============================================================
+       VIEW 3: PHÒNG THÍ NGHIỆM 3 BẪY DỮ LIỆU (EDGE CASES SANDBOX)
+       =============================================================== -->
+  <section class="view-container" id="view-edge-cases">
+
+    <div class="demo-header-bar">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 800; color: #f8fafc;">Phòng Thí Nghiệm & Kiểm Thử 3 Bẫy Dữ Liệu Dị
+          Biệt</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Mô phỏng tương tác thực tế: Race Condition, Payment
+          Timeout & Defensive Validation</p>
+      </div>
+      <span class="badge badge-rose">DEFENSIVE SECURITY LAB</span>
+    </div>
+
+    <div class="edge-cases-grid">
+      <!-- Sim 1: Race Condition -->
+      <div class="simulator-card">
+        <div class="card-icon-header">
+          <div class="card-icon icon-rose">⚡</div>
+          <div class="card-header-text">
+            <h3>1. Tranh Chấp Tồn Kho (Race Condition)</h3>
+            <span>5 Khách cùng mua 1 món duy nhất lúc Flash Sale</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.8rem; color: #cbd5e1;">
+          Sản phẩm <code>PRD-1003 (Thịt Ba Rọi Heo CP)</code> chỉ còn <strong>đúng 1 đơn vị</strong> trong kho. Mô phỏng
+          5 người dùng bấm nút đặt hàng tại cùng một mili-giây.
+        </p>
+
+        <button class="btn-action btn-primary" id="btn-run-race-sim">
+          🚀 Kích Hoạt 5 Khách Đặt Hàng Đồng Thời
+        </button>
+
+        <div class="sim-output-console" id="console-race-sim">
+          [Hệ thống sẵn sàng] Bấm nút trên để bắt đầu thử nghiệm Race Condition...
+        </div>
+      </div>
+
+      <!-- Sim 2: Payment Timeout -->
+      <div class="simulator-card">
+        <div class="card-icon-header">
+          <div class="card-icon icon-amber">⏳</div>
+          <div class="card-header-text">
+            <h3>2. Gián Đoạn Cổng TT & Đối Soát 5 Phút</h3>
+            <span>Trừ tiền ví VNPay nhưng đứt kết nối Callback</span>
+          </div>
+        </div>
+
+        <p style="font-size: 0.8rem; color: #cbd5e1;">
+          Khách đã bị trừ 195.000 đ trên ví VNPay nhưng mạng di động bị ngắt, Webhook IPN không tới được FastMart. Đơn
+          chuyển vào hàng đợi đối soát tự động.
+        </p>
+
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="btn-action" id="btn-run-timeout-sim" style="flex: 1;">
+            1. Mô Phỏng Đứt Mạng
+          </button>
+          <button class="btn-action btn-primary" id="btn-trigger-reconciliation" style="flex: 1;" disabled>
+            2. Chạy Đối Soát 5 Phút
+          </button>
+        </div>
+
+        <div class="sim-output-console" id="console-timeout-sim">
+          [Hệ thống sẵn sàng] Bấm "1. Mô Phỏng Đứt Mạng" để bắt đầu...
+        </div>
+      </div>
+
+      <!-- Sim 3: Negative Input Injection -->
+      <div class="simulator-card">
+        <div class="card-icon-header">
+          <div class="card-icon icon-cyan">🛡️</div>
+          <div class="card-header-text">
+            <h3>3. Thử Nghiệm Payload Dị Biệt (Defensive)</h3>
+            <span>Chặn Số Lượng Âm & Voucher Hết Hạn tại Tầng 2</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0.5rem;">
+          <label class="form-label">Chọn Kịch bản Payload Tấn công:</label>
+          <select id="select-injection-type" class="form-control">
+            <option value="NEGATIVE_QUANTITY">Số lượng âm: { quantity: -5 }</option>
+            <option value="EXPIRED_VOUCHER">Mã Voucher hết hạn: "EXPIRED2024"</option>
+            <option value="INVALID_PHONE">Số điện thoại sai: "987abc12" (Không thỏa /^0\d{9}$/)</option>
+          </select>
+        </div>
+
+        <button class="btn-action btn-primary" id="btn-run-injection-sim">
+          🛡️ Gửi Payload Thử Thách Tầng Nghiệp Vụ
+        </button>
+
+        <div class="sim-output-console" id="console-injection-sim">
+          [Hệ thống sẵn sàng] Chọn kịch bản và bấm gửi payload...
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ===============================================================
+       VIEW 4: KIẾN TRÚC 3-TIER & CƠ SỞ DỮ LIỆU 3NF VIEWER
+       =============================================================== -->
+  <section class="view-container" id="view-db-arch">
+
+    <div class="demo-header-bar">
+      <div>
+        <h2 style="font-size: 1.3rem; font-weight: 800; color: #f8fafc;">Trực Quan Hóa Luồng 3-Tier & Live Database
+          Chuẩn 3NF</h2>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Quan sát dữ liệu quan hệ cập nhật theo thời gian thực
+          khi thực hiện đặt hàng và xử lý nghiệp vụ</p>
+      </div>
+      <span class="badge badge-emerald">REAL-TIME 3NF STORE</span>
+    </div>
+
+    <!-- DB Tables Grid -->
+    <div class="db-tables-grid">
+      <!-- Products Table -->
+      <div class="db-table-card">
+        <h4>
+          <span>TABLE: Products (Sản phẩm)</span>
+          <span class="badge badge-cyan">Entity</span>
+        </h4>
+        <div class="table-scroll" id="db-table-products"></div>
+      </div>
+
+      <!-- Orders Table -->
+      <div class="db-table-card">
+        <h4>
+          <span>TABLE: Orders (Đơn hàng)</span>
+          <span class="badge badge-emerald">Master</span>
+        </h4>
+        <div class="table-scroll" id="db-table-orders"></div>
+      </div>
+
+      <!-- OrderItems Table (3NF Intersection) -->
+      <div class="db-table-card">
+        <h4>
+          <span>TABLE: OrderItems (Chi tiết Đơn - Bảng Trung Gian 3NF)</span>
+          <span class="badge badge-amber">3NF Intermediate</span>
+        </h4>
+        <div class="table-scroll" id="db-table-order-items"></div>
+      </div>
+
+      <!-- Payments Table -->
+      <div class="db-table-card">
+        <h4>
+          <span>TABLE: Payments (Thanh toán & Giao dịch)</span>
+          <span class="badge badge-indigo">Transactions</span>
+        </h4>
+        <div class="table-scroll" id="db-table-payments"></div>
+      </div>
+    </div>
+
+    <!-- Security & Audit Log Table -->
+    <div class="db-table-card" style="margin-top: 1.25rem;">
+      <h4>
+        <span>TẦNG 2 & 3: REAL-TIME AUDIT LOGS (Giám Sát An Ninh & Giao Dịch)</span>
+        <span class="badge badge-rose">Security Monitor</span>
+      </h4>
+      <div class="table-scroll" id="db-table-audit-logs"></div>
+    </div>
+
+  </section>
+
+
+  <!-- ===============================================================
+       VIEW 5: HỒ SƠ ĐẶC TẢ SRS CHUẨN IEEE 830 / ISO 29148
+       =============================================================== -->
+  <section class="view-container" id="view-srs-doc">
+
+    <div class="srs-paper">
+
+      <!-- Administrative Header -->
+      <div style="border-bottom: 2px solid #06b6d4; padding-bottom: 1.5rem; margin-bottom: 2rem;">
+        <span class="badge badge-cyan" style="margin-bottom: 0.5rem;">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM • ĐỘC LẬP - TỰ
+          DO - HẠNH PHÚC</span>
+        <h1 style="font-size: 1.8rem; font-weight: 800; color: #f8fafc; margin-top: 0.5rem;">
+          HỒ SƠ ĐẶC TẢ YÊU CẦU PHẦN MỀM (SRS)<br>
+          HỆ THỐNG QUẢN LÝ CHUỖI BÁN LẺ & ĐẶT HÀNG ĐA KÊNH FASTMART-ENTERPRISE
+        </h1>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 0.5rem;">
+          Tuân thủ tiêu chuẩn quốc tế <strong>IEEE 830-1998 / ISO/IEC/IEEE 29148:2018</strong>
+        </p>
+
+        <!-- 6 Administrative Fields -->
+        <div
+          style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem; background: rgba(15,23,42,0.8); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-subtle); font-size: 0.82rem;">
+          <div><strong>1. Tên Dự án:</strong> FastMart-Enterprise</div>
+          <div><strong>2. Mã Tài liệu:</strong> SRS-FM-2026-v1.0</div>
+          <div><strong>3. Phiên bản:</strong> <span class="badge badge-emerald">v1.0 APPROVED</span></div>
+          <div><strong>4. Ngày phát hành:</strong> 04/10/2026</div>
+          <div><strong>5. Đơn vị thực hiện:</strong> SA & SE Engineering Team</div>
+          <div><strong>6. Mức độ bảo mật:</strong> Nội bộ Doanh nghiệp (Confidential)</div>
+        </div>
+      </div>
+
+      <!-- Change Log Table -->
+      <h2>Lịch Sử Thay Đổi Tài Liệu (Document Change Log)</h2>
+      <table class="slide-table" style="margin-bottom: 2rem;">
+        <thead>
+          <tr>
+            <th>Phiên bản</th>
+            <th>Ngày cập nhật</th>
+            <th>Tác giả / Vai trò</th>
+            <th>Mô tả chi tiết thay đổi</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>v0.9</td>
+            <td>28/09/2026</td>
+            <td>SA Team Lead</td>
+            <td>Khởi tạo bản nháp khảo sát yêu cầu, mô hình hóa luồng nghiệp vụ sơ bộ</td>
+            <td><span class="badge badge-amber">DRAFT</span></td>
+          </tr>
+          <tr>
+            <td>v1.0</td>
+            <td>04/10/2026</td>
+            <td>SA & PM Team</td>
+            <td>Hoàn thiện thiết kế 3-Tier, UML Class/Sequence, UI Wireframe, ERD 3NF và xử lý 3 bẫy dữ liệu</td>
+            <td><span class="badge badge-emerald">APPROVED</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Section 1: Introduction -->
+      <h2>Phần 1: Giới Thiệu (Introduction)</h2>
+      <p>
+        <strong>1.1. Mục đích:</strong> Tài liệu này đặc tả toàn bộ yêu cầu chức năng (FR), yêu cầu phi chức năng (NFR),
+        kiến trúc phân tầng 3-tier, và thiết kế dữ liệu chuẩn 3NF cho hệ thống FastMart-Enterprise, làm cơ sở kỹ thuật
+        duy nhất để đội ngũ Lập trình (Dev) xây dựng mã nguồn và đội ngũ Kiểm thử (Tester) thiết kế Test Cases nghiệm
+        thu.
+      </p>
+      <p>
+        <strong>1.2. Phạm vi:</strong> Hệ thống phục vụ vận hành chuỗi 50 siêu thị FMCG và nền tảng bán lẻ trực tuyến
+        (Web & Mobile App). Bao gồm các phân hệ: Đặt hàng đa kênh, Khóa tồn kho thời gian thực 15 phút, Tích hợp thanh
+        toán VNPay/Momo, Xử lý lệnh kho & vận chuyển, Quản trị danh mục và Phân quyền RBAC.
+      </p>
+      <p>
+        <strong>1.3. Đánh giá Chi tiết Thực trạng Hệ thống Cũ (AS-IS Analysis &amp; Pain Points):</strong>
+      </p>
+      <ul>
+        <li><strong>Thực trạng Hạ tầng (1-Tier Monolithic):</strong> Hệ thống cũ tích hợp toàn bộ Web, Business Logic và
+          Database trên cùng một cụm máy chủ vật lý. Khi xảy ra Flash Sale hoặc giờ cao điểm, lượng truy cập tăng vọt từ
+          500 CCU lên hơn 8,000 CCU khiến CPU/RAM chạm ngưỡng 100%, cạn kiệt Connection Pool và gây sập (Crash) toàn
+          diện chuỗi bán lẻ.</li>
+        <li><strong>Thực trạng Tồn kho (Bất đồng bộ &amp; Over-selling):</strong> 50 siêu thị thành viên dùng CSDL POS
+          cục bộ đồng bộ định kỳ 2 tiếng/lần về trung tâm. Kênh Website và App hiển thị số lượng tồn ảo, dẫn tới tỷ lệ
+          bán quá tồn (Over-selling) lên tới 18.5%, gây đứt gãy luồng thanh toán và phát sinh hàng ngàn khiếu nại khách
+          hàng.</li>
+        <li><strong>Thực trạng Quy trình &amp; Bàn giao:</strong> Tài liệu yêu cầu cũ rời rạc, thiết kế chắp vá, truyền
+          miệng phi chuẩn hóa. Đội ngũ Lập trình (Dev) và Kiểm thử (Tester) không có hồ sơ đặc tả chuẩn để làm căn cứ,
+          dẫn đến tranh chấp phạm vi nghiêm trọng khi nghiệm thu.</li>
+      </ul>
+
+      <!-- Section 2: Overall Description -->
+      <h2>Phần 2: Mô Tả Tổng Quan (Overall Description)</h2>
+      <p>
+        <strong>2.1. Bối cảnh kiến trúc:</strong> Chuyển dịch toàn diện từ Monolithic 1-Tier cũ sang mô hình 3 Tầng độc
+        lập: Presentation Layer (Web/App/POS) ➔ Business Logic Layer (Order API, Stock Lock, Promotion Engine) ➔ Data
+        Access Layer (MySQL Master-Slave + Redis Distributed Cache).
+      </p>
+      <p>
+        <strong>2.2. Lớp người dùng (User Classes):</strong> Khách hàng trực tuyến (Customer), Thu ngân quầy (POS
+        Cashier), Nhân viên kho (Warehouse Staff), và Quản trị viên (System Admin).
+      </p>
+
+      <!-- Section 3: Specific Requirements -->
+      <h2>Phần 3: Yêu Cầu Kỹ Thuật Chi Tiết (Specific Requirements)</h2>
+      <p>
+        <strong>3.1. Danh mục Yêu cầu Chức năng (FR):</strong>
+      </p>
+      <ul>
+        <li><strong>FR-ORD-001 (Quản lý Đặt hàng Đa kênh):</strong> Cho phép tạo đơn qua Web, App và POS siêu thị; tự
+          động tính tổng tiền và chiết khấu voucher.</li>
+        <li><strong>FR-INV-002 (Khóa Tồn kho Thời gian thực):</strong> Tự động giữ chỗ tồn kho trong 15 phút khi khách
+          tạo đơn; giải phóng nếu quá hạn hoặc xác nhận trừ kho khi thanh toán thành công.</li>
+        <li><strong>FR-PAY-003 (Thanh toán Đa phương thức):</strong> Hỗ trợ Tiền mặt, Thẻ, VNPay QR, MoMo; tích hợp cơ
+          chế đối soát tự động sau 5 phút nếu gián đoạn mạng.</li>
+        <li><strong>FR-WAR-004 (Xử lý Xuất kho & Giao vận):</strong> Tự động đẩy đơn CONFIRMED về kho gần nhất để đóng
+          gói và xuất hàng.</li>
+      </ul>
+
+      <p>
+        <strong>3.2. Danh mục Yêu cầu Phi chức năng (NFR) - Chuẩn SMART:</strong>
+      </p>
+      <ul>
+        <li><strong>SLA Uptime:</strong> Cam kết duy trì <strong>99.9%</strong> độ sẵn sàng hàng năm.</li>
+        <li><strong>Latency:</strong> Độ trễ xử lý API đơn hàng < <strong>2.0 giây</strong> đối với 95% số request
+            (P95).</li>
+        <li><strong>Security:</strong> Toàn bộ API bảo mật qua <strong>HTTPS TLS 1.3</strong>; mật khẩu băm
+          <strong>BCrypt / SHA-256</strong>.</li>
+        <li><strong>Scalability:</strong> Chịu tải đồng thời tối thiểu <strong>10,000 CCU</strong> trong ngày hội Flash
+          Sale.</li>
+      </ul>
+
+      <!-- Section 4: Appendices & CCB -->
+      <h2>Phần 4: Phụ Lục & Quy Trình Kiểm Soát Thay Đổi (Change Control Board)</h2>
+      <p>
+        Mọi yêu cầu thay đổi tính năng sau khi tài liệu đạt trạng thái <code>v1.0 APPROVED</code> phải được gửi thông
+        qua Phiếu Yêu cầu Thay đổi (Change Request - CR) và được Hội đồng Kiểm soát Thay đổi (CCB) gồm Đại diện Khách
+        hàng, Project Manager và System Analyst Lead phê duyệt.
+      </p>
+
+      <!-- Approval Signatures -->
+      <h2 style="margin-top: 2rem;">Bảng Ký Duyệt Nghiệm Thu (Approval Signatures)</h2>
+      <table class="slide-table" style="margin-top: 1rem;">
+        <thead>
+          <tr>
+            <th>Bên Ký Duyệt</th>
+            <th>Đại Diện Họ & Tên</th>
+            <th>Chức Danh</th>
+            <th>Ngày Ký</th>
+            <th>Chữ Ký & Đóng Dấu</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Khách Hàng FastMart</strong></td>
+            <td>Nguyễn Văn Giám Đốc</td>
+            <td>Tổng Giám Đốc FastMart Chuỗi Bán Lẻ</td>
+            <td>04/10/2026</td>
+            <td><span class="badge badge-emerald">ĐÃ KÝ DUYỆT (SIGNED)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Ban Dự Án</strong></td>
+            <td>Phạm Quốc Trưởng</td>
+            <td>Project Manager (PM)</td>
+            <td>04/10/2026</td>
+            <td><span class="badge badge-emerald">ĐÃ KÝ DUYỆT (SIGNED)</span></td>
+          </tr>
+          <tr>
+            <td><strong>Đội Ngũ Phân Tích</strong></td>
+            <td>Nguyễn Việt Anh</td>
+            <td>Lead System Analyst (SA)</td>
+            <td>04/10/2026</td>
+            <td><span class="badge badge-emerald">ĐÃ KÝ DUYỆT (SIGNED)</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <!-- ===============================================================
+       CHECKOUT MODAL & RECEIPT MODAL
+       =============================================================== -->
+  <!-- Checkout Input Modal -->
+  <div class="modal-overlay" id="checkout-modal">
+    <div class="modal-card">
+      <div
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-subtle);">
+        <h3 style="font-size: 1.1rem; color: #f8fafc;">Xác Nhận Đặt Hàng & Thanh Toán</h3>
+        <button onclick="window.fastMartDemo.closeCheckoutModal()"
+          style="background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 1.2rem;">&times;</button>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Họ và tên khách hàng:</label>
+        <input type="text" id="checkout-customer-name" class="form-control" value="Nguyễn Việt Anh">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Số điện thoại (10 chữ số, bắt đầu bằng 0):</label>
+        <input type="text" id="checkout-customer-phone" class="form-control" value="0912345678">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email nhận hóa đơn điện tử:</label>
+        <input type="email" id="checkout-customer-email" class="form-control" value="vietanh@fastmart.vn">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phương thức thanh toán:</label>
+        <select id="checkout-payment-method" class="form-control">
+          <option value="VNPAY">Cổng VNPAY-QR (Ví điện tử & Mobile Banking)</option>
+          <option value="MOMO">Ví Điện Tử MoMo</option>
+          <option value="CASH">Tiền mặt tại Siêu thị / Khi nhận hàng (COD)</option>
+          <option value="BANK_TRANSFER">Chuyển khoản Ngân hàng Trực tiếp</option>
+        </select>
+      </div>
+
+      <div
+        style="background: rgba(15,23,42,0.8); padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Tổng tiền thanh toán:</span>
+        <strong id="modal-order-total" style="font-size: 1.15rem; color: #38bdf8;">0 đ</strong>
+      </div>
+
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn-action" onclick="window.fastMartDemo.closeCheckoutModal()"
+          style="flex: 1; justify-content: center;">Hủy</button>
+        <button class="btn-action btn-primary" id="btn-confirm-payment" style="flex: 2; justify-content: center;">
+          Xác Nhận & Tạo Đơn Hàng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Receipt / POS Invoice Modal -->
+  <div class="modal-overlay" id="receipt-modal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div id="receipt-content-body">
+        <!-- Rendered dynamically -->
+      </div>
+      <div style="display: flex; gap: 0.5rem; margin-top: 1.25rem;">
+        <button class="btn-action" onclick="window.print()" style="flex: 1; justify-content: center;">
+          🖨️ In Hóa Đơn
+        </button>
+        <button class="btn-action btn-primary"
+          onclick="document.getElementById('receipt-modal').classList.remove('active')"
+          style="flex: 1; justify-content: center;">
+          Đóng Hóa Đơn
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Images Folder / Gallery Modal -->
+  <div class="modal-overlay" id="images-gallery-modal">
+    <div class="modal-card" style="max-width: 900px; max-height: 88vh; display: flex; flex-direction: column;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+        <div>
+          <h3 style="color: #38bdf8; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>📁</span> Thư Mục 7 Bản Vẽ Sơ Đồ Hệ Thống (Thư mục <code>images/</code>)
+          </h3>
+          <p style="font-size: 0.78rem; color: var(--text-dim); margin-top: 0.2rem;">
+            Bạn có thể tự thêm hoặc thay đổi bất kỳ ảnh nào bằng cách copy đè file ảnh vào thư mục <code>MINI/images/</code> với tên file tương ứng.
+          </p>
+        </div>
+        <button id="btn-close-images-modal" style="background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer;">&times;</button>
+      </div>
+
+      <div style="overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; padding-right: 0.25rem;">
+        <!-- Card 1 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/FastMart_3Tier.png" alt="Kiến trúc 3 tầng" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/FastMart_3Tier.png', '1. Sơ đồ Kiến trúc 3 tầng')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #38bdf8;">1. Kiến Trúc 3 Tầng</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/FastMart_3Tier.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/FastMart_3Tier.png', '1. Sơ đồ Kiến trúc 3 tầng')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/Activity_Order.png" alt="Activity Diagram" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/Activity_Order.png', '2. Activity Diagram 4 Làn Swimlanes')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #34d399;">2. Activity Diagram 4 Làn</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/Activity_Order.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/Activity_Order.png', '2. Activity Diagram 4 Làn Swimlanes')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/UseCase_Diagram.png" alt="Use Case Diagram" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/UseCase_Diagram.png', '3. Use Case Diagram & Đặc Tả')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #fbbf24;">3. Use Case Diagram</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/UseCase_Diagram.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/UseCase_Diagram.png', '3. Use Case Diagram & Đặc Tả')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/Class_Diagram.png" alt="Class Diagram" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/Class_Diagram.png', '4. Class Diagram 3 Ngăn & OOP')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #818cf8;">4. Class Diagram 3 Ngăn</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/Class_Diagram.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/Class_Diagram.png', '4. Class Diagram 3 Ngăn & OOP')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/Sequence_Order.png" alt="Sequence Diagram" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/Sequence_Order.png', '5. Sequence Diagram Đặt Hàng & Trừ Kho')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #fb7185;">5. Sequence Diagram</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/Sequence_Order.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/Sequence_Order.png', '5. Sequence Diagram Đặt Hàng & Trừ Kho')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/UI_Checkout.png" alt="UI Wireframe Checkout" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/UI_Checkout.png', '6. UI/UX Wireframe Checkout')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #38bdf8;">6. UI Wireframe Checkout</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/UI_Checkout.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/UI_Checkout.png', '6. UI/UX Wireframe Checkout')">🔍 Xem Chi Tiết</button>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="slide-card" style="padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem;">
+          <div style="position: relative; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #000;">
+            <img src="images/ERD_3NF.png" alt="CSDL ERD 3NF" style="width: 100%; height: 130px; object-fit: cover; cursor: pointer;" onclick="openDiagramLightbox('images/ERD_3NF.png', '7. CSDL ERD Chuẩn 3NF')">
+          </div>
+          <div>
+            <strong style="font-size: 0.82rem; color: #34d399;">7. CSDL ERD Chuẩn 3NF</strong>
+            <div style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">images/ERD_3NF.png</div>
+          </div>
+          <button class="btn-action" style="font-size: 0.75rem; justify-content: center; padding: 0.3rem;" onclick="openDiagramLightbox('images/ERD_3NF.png', '7. CSDL ERD Chuẩn 3NF')">🔍 Xem Chi Tiết</button>
+        </div>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 0.75rem; margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.78rem; color: var(--text-muted);">
+          📍 Thư mục vật lý trên máy: <code>Desktop/MINI/images/</code>
+        </span>
+        <button class="btn-action btn-primary" onclick="document.getElementById('images-gallery-modal').classList.remove('active')">
+          Đóng Cửa Sổ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/database.js"></script>
+  <script src="js/slides.js"></script>
+  <script src="js/diagrams.js"></script>
+  <script src="js/demo.js"></script>
+  <script src="js/edge_cases.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

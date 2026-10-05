@@ -1,0 +1,23 @@
+========================================================================
+HUONG DAN THEM VA THAY THE ANH SO DO - DU AN FASTMART-ENTERPRISE
+========================================================================
+
+Thu muc nay chua toan bo anh so do ky thuat cua du an.
+Ban chi can luu anh cua minh voi dung ten file sau day vao thu muc nay:
+
+1. FastMart_3Tier.png    : So do Kien truc 3 tang (Presentation -> Business -> Data)
+2. Activity_Order.png    : So do Activity Diagram 4 lan Swimlanes
+3. UseCase_Diagram.png   : So do Use Case Diagram tong quan & <<include>>, <<extend>>
+4. Class_Diagram.png     : So do Class Diagram 3 ngan chi tiet & OOP
+5. Sequence_Order.png    : So do Sequence Diagram Dat hang & Tru ton kho thoi gian thuc
+6. UI_Checkout.png       : So do Phac thao Giao dien UI/UX Wireframe Checkout
+7. ERD_3NF.png           : So do Co so du lieu ERD chuan 3NF
+
+------------------------------------------------------------------------
+CACH THUC HIEN:
+------------------------------------------------------------------------
+- Buoc 1: Ve so do bang draw.io, PlantUML, StarUML hoac cong cu tuy y.
+- Buoc 2: Export ra dinh dang PNG.
+- Buoc 3: Copy/Dan de (overwrite) vao thu muc nay voi ten file tuong ung.
+- Buoc 4: Mo file index.html de xem slide trinh chieu cap nhat ngay lap tuc.
+========================================================================
